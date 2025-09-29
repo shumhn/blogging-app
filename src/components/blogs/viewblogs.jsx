@@ -267,7 +267,7 @@ export function View() {
                         {blog.title}
                       </h2>
                       {mainText && (
-                        <p className="max-w-3xl text-base text-gray-500 line-clamp-2">{mainText}</p>
+                        <p className="text-base text-gray-600 mb-2 font-blog">{mainText}</p>
                       )}
                     </Link>
 
