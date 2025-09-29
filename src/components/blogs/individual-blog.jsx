@@ -283,7 +283,7 @@ useEffect(() => {
   const readMins = words ? Math.max(1, Math.round(words / 200)) : null;
 
   return (
-    <article className={`bg-white font-default ${font}`}>
+    <article className={`bg-white font-blog ${font}`}>
       <header className="border-b border-gray-200">
         <nav className="mx-auto flex max-w-5xl items-center gap-6 px-6 py-8 text-sm lowercase tracking-wide text-gray-700 font-title">
           {NAV_LINKS.map(({ href, label, external }) =>
@@ -368,7 +368,7 @@ useEffect(() => {
       )}
 
       {/* Content */}
-      <main className="prose prose-stone max-w-3xl mx-auto px-6 py-6 mt-4 text-gray-800 font-default prose-headings:font-title prose-headings:text-gray-900 prose-p:leading-relaxed prose-li:leading-relaxed prose-img:rounded-lg prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl">
+      <main className="prose prose-stone max-w-3xl mx-auto px-6 py-6 mt-4 text-gray-800 font-blog prose-headings:font-blog prose-headings:text-gray-900 prose-p:leading-relaxed prose-p:text-gray-600 prose-li:leading-relaxed prose-img:rounded-lg prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl">
         <div ref={contentRef} dangerouslySetInnerHTML={{ __html: blog.content }} />
         {blog.tags && (
           <div className="mt-8 text-sm text-gray-600">
