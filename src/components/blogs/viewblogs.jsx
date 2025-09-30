@@ -171,7 +171,7 @@ export function View() {
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 py-16">
+      <main className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-8">
         <header className="space-y-4">
           <p className="text-sm uppercase tracking-[0.25em] text-gray-500">recent writing</p>
           <h1 className="text-2xl sm:text-[1.65rem] font-semibold tracking-tight text-gray-900 font-blog uppercase">Thoughts on engineering, systems, and product</h1>
@@ -243,7 +243,7 @@ export function View() {
               return (
                 <article
                   key={blog._id}
-                  className={`border-b border-gray-200 py-10 first:pt-0 ${index === blogs.length - 1 ? "last:border-b-0" : ""}`}
+                  className={`border-b border-gray-200 py-5 first:pt-0 ${index === blogs.length - 1 ? "last:border-b-0" : ""}`}
                 >
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
