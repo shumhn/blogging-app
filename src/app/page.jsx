@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-white text-gray-900 font-default ${font}`}>
       <header className="border-b border-gray-200">
-        <nav className="mx-auto flex max-w-5xl items-center gap-6 px-6 py-8 text-sm lowercase tracking-wide text-gray-700 font-title">
+        <nav className="mx-auto flex max-w-5xl items-center gap-6 px-6 py-8 text-[18px] lowercase tracking-wide font-blog text-[oklch(0.551_0.027_264.364)]">
           {NAV_LINKS.map(({ href, label, external }) =>
             external ? (
               <a
@@ -81,12 +81,12 @@ export default function Home() {
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="transition-colors duration-150 hover:text-gray-900"
+                className="transition-colors duration-200 hover:text-foreground"
               >
                 {label}
               </a>
             ) : (
-              <Link key={label} href={href} className="transition-colors duration-150 hover:text-gray-900">
+              <Link key={label} href={href} className="transition-colors duration-200 hover:text-foreground">
                 {label}
               </Link>
             ),

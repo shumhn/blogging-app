@@ -125,15 +125,15 @@ export function View() {
     <div className={`min-h-screen bg-white text-gray-900 font-blog ${font}`}>
       <header className="bg-white sticky top-0 z-50 border-b border-gray-200">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 py-4 sm:py-6">
-          <div className="flex items-center gap-6 text-sm lowercase tracking-wide text-gray-700">
-            <Link href="/" className="font-semibold text-gray-900 transition-colors duration-150 hover:text-gray-700">
+          <div className="flex items-center gap-6 text-[18px] lowercase tracking-wide font-blog text-[oklch(0.551_0.027_264.364)]">
+            <Link href="/" className="font-semibold text-current transition-colors duration-200 hover:text-foreground">
               devsg
             </Link>
-            <Link href="/blogs/view" className="transition-colors duration-150 hover:text-gray-900">
+            <Link href="/blogs/view" className="transition-colors duration-200 hover:text-foreground">
               blogs
             </Link>
             {loggedIn && (
-              <Link href="/blogs/create" className="transition-colors duration-150 hover:text-gray-900">
+              <Link href="/blogs/create" className="transition-colors duration-200 hover:text-foreground">
                 create blog
               </Link>
             )}
