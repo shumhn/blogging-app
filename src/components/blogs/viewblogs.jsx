@@ -3,7 +3,7 @@
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, MessageSquare, Bookmark, MoreHorizontal, Search, Bell, Heart } from "lucide-react";
+import { MoreHorizontal, Search, Bell } from "lucide-react";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import { AppContext } from "@/app/providers";
 
@@ -217,15 +217,12 @@ export function View() {
                   blog.description ||
                   blog.excerpt ||
                   (typeof blog.contentPlain === "string" ? blog.contentPlain : "");
-                return typeof main === "string" ? main : "";
+                if (typeof main !== "string") return "";
+                const trimmed = main.trim();
+                // Keep the feed concise
+                return trimmed.length > 200 ? `${trimmed.slice(0, 200)}…` : trimmed;
               })();
 
-              let readTime = "1 min read";
-              if (mainText) {
-                const words = mainText.split(/\s+/).filter(Boolean).length;
-                const minutes = Math.max(1, Math.min(30, Math.ceil(words / 200)));
-                readTime = `${minutes} min read`;
-              }
 
               const tagsList = (() => {
                 const t = blog.tags;
@@ -243,7 +240,7 @@ export function View() {
               return (
                 <article
                   key={blog._id}
-                  className={`border-b border-gray-200 py-5 first:pt-0 ${index === blogs.length - 1 ? "last:border-b-0" : ""}`}
+                  className={`border-b border-gray-200 py-6 first:pt-0 ${index === blogs.length - 1 ? "last:border-b-0" : ""}`}
                 >
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
@@ -258,8 +255,6 @@ export function View() {
                       <time dateTime={blog.createdAt}>
                         {new Date(blog.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                       </time>
-                      <span aria-hidden>·</span>
-                      <span>{readTime}</span>
                     </div>
 
                     <Link href={`/blogs/${blog.slug}`} className="group inline-flex flex-col gap-3">
@@ -267,7 +262,7 @@ export function View() {
                         {blog.title}
                       </h2>
                       {mainText && (
-                        <p className="text-base text-gray-600 mb-2 font-blog">{mainText}</p>
+                        <p className="text-gray-800 leading-snug md:text-lg lg:text-xl md:leading-relaxed mb-2 font-blog">{mainText}</p>
                       )}
                     </Link>
 
@@ -279,64 +274,37 @@ export function View() {
                       </div>
                     ) : null}
 
-                    <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span>{readTime}</span>
-                        {typeof blog.views === "number" && (
-                          <span className="inline-flex items-center gap-1">
-                            <Eye className="h-4 w-4" />
-                            {Intl.NumberFormat("en-US", { notation: "compact" }).format(blog.views)}
-                          </span>
-                        )}
-                        {typeof blog.likesCount === "number" && (
-                          <span className="inline-flex items-center gap-1">
-                            <Heart className="h-4 w-4 text-blue-600" />
-                            {Intl.NumberFormat("en-US", { notation: "compact" }).format(blog.likesCount)}
-                          </span>
-                        )}
-                        {typeof blog.commentsCount === "number" && (
-                          <span className="inline-flex items-center gap-1">
-                            <MessageSquare className="h-4 w-4" />
-                            {blog.commentsCount}
-                          </span>
-                        )}
+                    {isOwner && (
+                      <div className="mt-2 flex items-center justify-end">
+                        <div className="relative">
+                          <button
+                            className="p-1 text-gray-400 transition-colors hover:text-gray-700"
+                            aria-label="More options"
+                            onClick={() => toggleMenu(blog._id)}
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </button>
+                          {menuOpenId === blog._id && (
+                            <div className="absolute right-0 top-7 z-20 w-40 rounded-md border border-gray-200 bg-white py-2 text-left text-sm shadow-lg">
+                              <Link
+                                href={`/blogs/update/${blog._id}`}
+                                className="block px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
+                                onClick={() => setMenuOpenId(null)}
+                              >
+                                Edit
+                              </Link>
+                              <button
+                                type="button"
+                                className="block w-full px-4 py-2 text-left text-red-600 transition-colors hover:bg-red-50"
+                                onClick={() => openDeleteModal(blog._id)}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-
-                      <div className="relative flex items-center gap-3 text-gray-400">
-                        <button className="p-1 transition-colors hover:text-gray-600" aria-label="Bookmark">
-                          <Bookmark className="h-4 w-4" />
-                        </button>
-                        {isOwner && (
-                          <>
-                            <button
-                              className="p-1 transition-colors hover:text-gray-600"
-                              aria-label="More options"
-                              onClick={() => toggleMenu(blog._id)}
-                            >
-                              <MoreHorizontal className="h-4 w-4" />
-                            </button>
-                            {menuOpenId === blog._id && (
-                              <div className="absolute right-0 top-7 z-20 w-40 rounded-md border border-gray-200 bg-white py-2 text-left text-sm shadow-lg">
-                                <Link
-                                  href={`/blogs/update/${blog._id}`}
-                                  className="block px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
-                                  onClick={() => setMenuOpenId(null)}
-                                >
-                                  Edit
-                                </Link>
-                                <button
-                                  type="button"
-                                  className="block w-full px-4 py-2 text-left text-red-600 transition-colors hover:bg-red-50"
-                                  onClick={() => openDeleteModal(blog._id)}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </article>
               );
