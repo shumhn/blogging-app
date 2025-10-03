@@ -17,6 +17,7 @@ const config = {
         default: ["var(--font-default)"],
         title: ["var(--font-title)"],
         blog: ["var(--font-blog)"],
+        monoUi: ["var(--font-mono-ui)"],
       },
       colors: {
         border: "hsl(var(--border))",

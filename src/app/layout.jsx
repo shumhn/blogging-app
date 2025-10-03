@@ -3,14 +3,14 @@ import "@/styles/prosemirror.css";
 // import "katex/dist/katex.min.css"; // Removed to avoid CSS ESM loader error
 
 import Providers from "@/app/providers";
-import { playfair, montserrat, cal, inter, ysabeau } from "@/styles/fonts";
+import { playfair, montserrat, cal, inter, ysabeau, jetbrainsMono } from "@/styles/fonts";
 import Script from "next/script";
 
 export default function RootLayout({ children }) {
   return (
       <html
       lang="en"
-      className={`${montserrat.variable} ${playfair.variable} ${inter.variable} ${cal.variable} ${ysabeau.variable}`}
+      className={`${montserrat.variable} ${playfair.variable} ${inter.variable} ${cal.variable} ${ysabeau.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body className="font-default bg-white min-h-screen flex flex-col" suppressHydrationWarning>

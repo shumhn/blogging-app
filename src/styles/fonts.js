@@ -1,4 +1,4 @@
-import { Crimson_Text, Inconsolata, Inter, Playfair_Display, Montserrat, Ysabeau_Office } from "next/font/google";
+import { Crimson_Text, Inconsolata, Inter, Playfair_Display, Montserrat, Ysabeau_Office, JetBrains_Mono } from "next/font/google";
 // Local CalSans is not present; map title font to premium fonts
 export const cal = Playfair_Display({ 
   variable: "--font-title", 
@@ -49,6 +49,13 @@ export const montserrat = Montserrat({
 
 export const ysabeau = Ysabeau_Office({
   variable: "--font-blog",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+export const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono-ui",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700"],

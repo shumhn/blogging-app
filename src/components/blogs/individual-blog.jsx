@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: "/", label: "home" },
   { href: "/blogs/view", label: "blog" },
   { href: "/chat", label: "chat" },
+  { href: "/portfolio", label: "portfolio" },
 ];
 
 export function IndividualBlog({ id }) {
