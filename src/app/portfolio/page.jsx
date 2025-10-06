@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const experience = [
   {
@@ -45,15 +48,37 @@ const skills = [
   "Git",
 ];
 
-const blogPosts = [
-  { title: "Context Rot: Why More Context Isn't Always Better for AI", date: "2025-07-27", href: "/blogs/context-rot" },
-  { title: "ALITA: Agent That Creates Its Own Tools", date: "2025-06-21", href: "/blogs/alita" },
-  { title: "RAG Architecture", date: "2025-03-14", href: "/blogs/rag-architecture" },
-  { title: "Diving into Multi-stage Builds with Docker", date: "2025-02-07", href: "/blogs/multistage-docker" },
-  { title: "Handling Authentication in VS Code Extension", date: "2024-10-30", href: "/blogs/vscode-auth" },
-];
-
 export default function PortfolioPage() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [blogsLoading, setBlogsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const response = await fetch("/api/blogs/view", { method: "GET" });
+        const data = await response.json();
+        if (!data.error && data.data) {
+          // Map the blog data to match the expected format
+          const formattedBlogs = data.data.map((blog) => ({
+            title: blog.title,
+            date: new Date(blog.createdAt).toLocaleDateString("en-US", { 
+              year: "numeric", 
+              month: "2-digit", 
+              day: "2-digit" 
+            }),
+            href: `/blogs/${blog.slug}`,
+          }));
+          setBlogPosts(formattedBlogs);
+        }
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      } finally {
+        setBlogsLoading(false);
+      }
+    }
+
+    fetchBlogs();
+  }, []);
   return (
     <main className="font-monoUi bg-white text-gray-900">
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-0 py-12 sm:py-16 space-y-10">
@@ -155,16 +180,24 @@ export default function PortfolioPage() {
 
         <section className="portfolio-section px-4 md:px-10 py-6 md:py-10 space-y-5">
           <h2 className="portfolio-heading">Blogs</h2>
-          <div className="grid gap-3">
-            {blogPosts.map((post) => (
-              <div key={post.title} className="flex flex-col md:flex-row md:items-center md:justify-between">
-                <Link href={post.href} className="portfolio-link text-base md:text-lg">
-                  {post.title} ↗
-                </Link>
-                <span className="portfolio-text text-xs md:text-sm text-gray-600">{post.date}</span>
-              </div>
-            ))}
-          </div>
+          {blogsLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+          ) : blogPosts.length === 0 ? (
+            <p className="portfolio-text text-gray-600">No blog posts yet. Check back soon!</p>
+          ) : (
+            <div className="grid gap-3">
+              {blogPosts.map((post) => (
+                <div key={post.title} className="flex flex-col md:flex-row md:items-center md:justify-between">
+                  <Link href={post.href} className="portfolio-link text-base md:text-lg">
+                    {post.title} ↗
+                  </Link>
+                  <span className="portfolio-text text-xs md:text-sm text-gray-600">{post.date}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </main>
