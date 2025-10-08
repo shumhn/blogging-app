@@ -5,16 +5,10 @@ import { useEffect, useState } from "react";
 
 const experience = [
   {
-    company: "OWASP Foundation",
-    role: "Contributor under Google Summer of Code",
-    period: "June 2025 – Present",
-    href: "https://owasp.org/",
-  },
-  {
-    company: "DotPro Labs",
-    role: "Software Engineer Intern",
-    period: "December 2024 – February 2025",
-    href: "https://dotprolabs.com/",
+    company: "Zalient",
+    role: "Intern",
+    period: "August 2025 – Present",
+    href: "https://zalient.me/",
   },
 ];
 
