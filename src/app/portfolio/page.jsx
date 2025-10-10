@@ -1,7 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import { 
+  SiJavascript, 
+  SiTypescript, 
+  SiNextdotjs, 
+  SiTailwindcss, 
+  SiExpress, 
+  SiNodedotjs, 
+  SiMongodb, 
+  SiPython, 
+  SiGit 
+} from "react-icons/si";
 
 const experience = [
   {
@@ -9,37 +21,22 @@ const experience = [
     role: "Intern",
     period: "August 2025 – Present",
     href: "https://zalient.me/",
+    logo: "https://zalient.me/favicon.ico",
   },
 ];
 
-const projects = [
-  { name: "syntax-snipp", blurb: "Manage your code snippets.", categories: ["All", "Web", "AI", "Fun"], href: "https://github.com/Shumanh/syntax-snipp" },
-  { name: "Finvest Analysis", blurb: "Get investment insights with AI agent.", href: "https://github.com/Shumanh/finvest" },
-  { name: "Skill Master content", blurb: "Learn to grow your social media.", href: "https://github.com/Shumanh/skill-master" },
-  { name: "Deblomassi", blurb: "Fast commerce for digital businesses.", href: "https://github.com/Shumanh/deblomassi" },
-  { name: "Get paid to cheat", blurb: "Get rewards by showcasing cheats.", href: "https://github.com/Shumanh/get-paid-to-cheat" },
-  { name: "Talk to doc (RAG)", blurb: "RAG implementation using local models.", href: "https://github.com/Shumanh/talk-to-doc" },
-  { name: "Customer support Agent", blurb: "AI agent to handle customer queries.", href: "https://github.com/Shumanh/customer-support-agent" },
-  { name: "Type Trek", blurb: "Check your typing speed.", href: "https://github.com/Shumanh/typetrek" },
-];
+const projects = [];
 
 const skills = [
-  "JavaScript",
-  "Typescript",
-  "React",
-  "NextJs",
-  "Express",
-  "Nodejs",
-  "Python",
-  "Langchain",
-  "Langgraph",
-  "Postgres",
-  "Prisma",
-  "C",
-  "Docker",
-  "Kubernetes",
-  "AWS",
-  "Git",
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "Typescript", icon: SiTypescript, color: "#3178C6" },
+  { name: "NextJs", icon: SiNextdotjs, color: "#000000" },
+  { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "Express", icon: SiExpress, color: "#000000" },
+  { name: "Nodejs", icon: SiNodedotjs, color: "#339933" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "Python", icon: SiPython, color: "#3776AB" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
 ];
 
 export default function PortfolioPage() {
@@ -126,7 +123,19 @@ export default function PortfolioPage() {
             {experience.map((item) => (
               <div key={item.company} className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--portfolio-border)] text-sm">◎</span>
+                  {item.logo ? (
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--portfolio-border)] bg-white overflow-hidden">
+                      <Image 
+                        src={item.logo} 
+                        alt={`${item.company} logo`} 
+                        width={32} 
+                        height={32}
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color:var(--portfolio-border)] text-sm">◎</span>
+                  )}
                   <div>
                     <Link href={item.href} target="_blank" rel="noreferrer" className="portfolio-link text-base md:text-lg">
                       {item.company}
@@ -144,7 +153,7 @@ export default function PortfolioPage() {
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="portfolio-heading">Projects</h2>
             <div className="flex flex-wrap gap-2 text-xs">
-              {['All projects', 'Web projects', 'AI projects', 'Fun projects'].map((label) => (
+              {['All projects', 'Web projects', 'AI projects'].map((label) => (
                 <span key={label} className="portfolio-tag">{label}</span>
               ))}
             </div>
@@ -164,11 +173,15 @@ export default function PortfolioPage() {
         <section className="portfolio-section px-4 md:px-10 py-6 md:py-10 space-y-5">
           <h2 className="portfolio-heading">Skills</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {skills.map((skill) => (
-              <span key={skill} className="portfolio-tag justify-center text-xs">
-                {skill}
-              </span>
-            ))}
+            {skills.map((skill) => {
+              const Icon = skill.icon;
+              return (
+                <span key={skill.name} className="portfolio-tag justify-center text-xs flex items-center gap-2">
+                  <Icon style={{ color: skill.color }} className="text-lg" />
+                  {skill.name}
+                </span>
+              );
+            })}
           </div>
         </section>
 

@@ -13,6 +13,14 @@ const nextConfig = {
     };
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'zalient.me',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
