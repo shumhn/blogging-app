@@ -11,15 +11,16 @@ import {
   SiExpress, 
   SiNodedotjs, 
   SiMongodb, 
-  SiGit 
+  SiGit,
+  SiGithub
 } from "react-icons/si";
 import { AppContext } from "@/app/providers";
 
 const experience = [
   {
     company: "Zalient",
-    role: "Intern",
-    period: "August 2025 – Present",
+    role: "Backend Software Dev",
+    period: "Aug 2025 → Present",
     href: "https://zalient.me/",
     logo: "https://zalient.me/favicon.ico",
   },
@@ -27,25 +28,20 @@ const experience = [
 
 const projects = [
   {
-    name: "OwnTheWeb Blog Platform",
-    category: "web",
-    blurb: "Full-stack blog platform with rich text editor, authentication, and admin dashboard",
-    href: "/",
-    year: "2025"
-  },
-  {
-    name: "Solana NFT Marketplace",
-    category: "solana", 
-    blurb: "Decentralized NFT marketplace built on Solana blockchain with wallet integration",
-    href: "#",
-    year: "2024"
-  },
-  {
-    name: "AI Content Generator",
+    name: "Agentic Chat Bot (Aichat)",
     category: "ai",
-    blurb: "AI-powered content generation tool with natural language processing capabilities",
-    href: "#",
-    year: "2024"
+    blurb: "Node.js CLI chatbot powered by Google's Gemini API with robust error handling and typed UX.",
+    href: "https://github.com/Shumanh/Aichat",
+    year: "2025",
+    deployed: null
+  },
+  {
+    name: "ChainCred",
+    category: "solana",
+    blurb: "Customer loyalty program on Solana: businesses mint tokenized rewards; customers own and redeem on-chain.",
+    href: "https://github.com/Shumanh/ChainCred",
+    year: "2025",
+    deployed: "https://chain-cred-five.vercel.app/"
   }
 ];
 
@@ -66,26 +62,23 @@ export default function PortfolioPage() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [mounted, setMounted] = useState(false);
 
-  const baseClasses = useMemo(
-    () => (isDarkMode ? "bg-[#0b0b0b] text-[#f5f5f5]" : "bg-[#f7f5f0] text-[#151515]"),
-    [isDarkMode],
-  );
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const cardClass = useMemo(
-    () => (isDarkMode ? "border-white/10 bg-white/[0.05]" : "border-black/5 bg-white/80"),
-    [isDarkMode],
-  );
+  const baseClasses = "bg-[#f7f5f0] text-[#151515] dark:bg-[#0b0b0b] dark:text-[#f5f5f5]";
 
-  const headlineAccent = isDarkMode
-    ? "bg-gradient-to-r from-white via-white/60 to-white/10"
-    : "bg-gradient-to-r from-[#d6c29b] via-[#efddba] to-white";
+  const cardClass = "border-black/5 bg-white/80 dark:border-white/10 dark:bg-white/[0.05]";
 
-  const subcopyTint = isDarkMode ? "text-white/60" : "text-[#6b6b6b]";
-  const linkAccent = isDarkMode ? "text-white hover:text-gray-200" : "text-[#1f1f1f] hover:text-[#4f3f28]";
-  const underlineAccent = isDarkMode ? "decoration-white" : "decoration-[#c9aa72]";
-  const chipClass = isDarkMode ? "bg-white/[0.08] text-white/80 border-white/10" : "bg-white text-[#2c2c2c] border-black/5";
-  const spinnerClass = isDarkMode ? "border-white/30" : "border-black/30";
+  const headlineAccent = "bg-gradient-to-r from-[#d6c29b] via-[#efddba] to-white dark:from-white dark:via-white/60 dark:to-white/10";
+
+  const subcopyTint = "text-[#6b6b6b] dark:text-white/60";
+  const linkAccent = "text-[#1f1f1f] hover:text-[#4f3f28] dark:text-white dark:hover:text-gray-200";
+  const underlineAccent = "decoration-[#c9aa72] dark:decoration-white";
+  const chipClass = "bg-white text-[#2c2c2c] border-black/5 dark:bg-white/[0.08] dark:text-white/80 dark:border-white/10";
+  const spinnerClass = "border-black/30 dark:border-white/30";
 
   useEffect(() => {
     async function fetchBlogs() {
@@ -130,37 +123,27 @@ export default function PortfolioPage() {
           </div>
 
           <div
-            className={`inline-flex items-center gap-2 rounded-full border px-2 py-1 text-[10px] uppercase tracking-[0.35em] backdrop-blur transition-colors duration-300 ${
-              isDarkMode ? "border-white/10 bg-black/40 text-white/60" : "border-black/10 bg-white/70 text-black/60"
-            }`}
+            className="inline-flex items-center gap-2 rounded-full border px-2 py-1 text-[10px] uppercase tracking-[0.35em] backdrop-blur transition-colors duration-300 border-black/10 bg-white/70 text-black/60 dark:border-white/10 dark:bg-black/40 dark:text-white/60"
           >
             <button
               type="button"
               onClick={() => setTheme?.("light")}
               className={`rounded-full px-3 py-1 transition-colors ${
-                resolvedTheme === "light"
-                  ? isDarkMode
-                    ? "bg-white text-black"
-                    : "bg-black text-white"
-                  : isDarkMode
-                    ? "hover:text-white"
-                    : "hover:text-black"
+                mounted && resolvedTheme === "light"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "hover:text-black dark:hover:text-white"
               }`}
             >
               Light
             </button>
-            <span className={isDarkMode ? "text-white/30" : "text-black/30"}>/</span>
+            <span className="text-black/30 dark:text-white/30">/</span>
             <button
               type="button"
               onClick={() => setTheme?.("dark")}
               className={`rounded-full px-3 py-1 transition-colors ${
-                resolvedTheme === "dark"
-                  ? isDarkMode
-                    ? "bg-white text-black"
-                    : "bg-black text-white"
-                  : isDarkMode
-                    ? "hover:text-white"
-                    : "hover:text-black"
+                mounted && resolvedTheme === "dark"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "hover:text-black dark:hover:text-white"
               }`}
             >
               Dark
@@ -173,11 +156,7 @@ export default function PortfolioPage() {
           className={`relative overflow-hidden rounded-[2.25rem] border px-8 py-10 shadow-[0_20px_45px_-18px_rgba(0,0,0,0.55)] transition-colors duration-300 ${cardClass}`}
         >
           <div
-            className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-              isDarkMode
-                ? "bg-gradient-to-br from-white/5 via-transparent to-black/30 opacity-45"
-                : "bg-gradient-to-br from-white/70 via-transparent to-white/30 opacity-60"
-            }`}
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-br from-white/70 via-transparent to-white/30 opacity-60 dark:from-white/5 dark:via-transparent dark:to-black/30 dark:opacity-45"
           />
           <div className="relative z-10 space-y-6">
             <p className={`text-base sm:text-lg leading-relaxed ${subcopyTint}`}>
@@ -209,9 +188,14 @@ export default function PortfolioPage() {
               >
                 linkedin
               </Link>
-              <Link href="mailto:theshumanhere@gmail.com" className={`underline underline-offset-4 transition-colors ${linkAccent} ${underlineAccent}`}>
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=theshumanhere@gmail.com&su=Hello%20from%20your%20portfolio"
+                target="_blank"
+                rel="noreferrer"
+                className={`underline underline-offset-4 transition-colors ${linkAccent} ${underlineAccent}`}
+              >
                 mail
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -225,26 +209,22 @@ export default function PortfolioPage() {
             <h2 className="text-sm uppercase tracking-[0.35em]">Experience</h2>
             <div className="space-y-4">
               {experience.map((item) => (
-                <div
+                <Link
                   key={item.company}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
                   className={`flex flex-col gap-3 rounded-2xl border p-5 transition-colors duration-300 md:flex-row md:items-center md:justify-between ${cardClass}`}
                   style={{ backdropFilter: "blur(8px)" }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="space-y-1">
-                      <Link
-                        href={item.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`text-sm font-medium transition-colors ${linkAccent}`}
-                      >
-                        {item.company}
-                      </Link>
-                      <p className={`text-xs ${subcopyTint}`}>{item.role}</p>
+                      <span className={`text-base sm:text-lg font-semibold transition-colors ${linkAccent}`}>{item.company}</span>
+                      <p className={`text-sm ${subcopyTint}`}>{item.role}</p>
                     </div>
                   </div>
                   <span className={`text-xs uppercase tracking-[0.25em] ${subcopyTint}`}>{item.period}</span>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -270,9 +250,7 @@ export default function PortfolioPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300 ${
                     selectedCategory === category
-                      ? isDarkMode
-                        ? "bg-white text-black border-white"
-                        : "bg-black text-white border-black"
+                      ? "bg-black text-white border-black dark:bg-white dark:text-black dark:border-white"
                       : chipClass
                   }`}
                 >
@@ -294,12 +272,29 @@ export default function PortfolioPage() {
                       style={{ backdropFilter: "blur(8px)" }}
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <Link href={project.href} target="_blank" rel="noreferrer" className={`text-sm font-medium transition-colors ${linkAccent}`}>
-                          {project.name} ↗
-                        </Link>
-                        <span className={`text-[10px] uppercase tracking-[0.3em] ${subcopyTint}`}>{project.year ?? "2025"}</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => {
+                              const url = project.deployed || project.href;
+                              window.open(url, '_blank', 'noopener,noreferrer');
+                            }}
+                            className={`text-base sm:text-lg font-semibold transition-colors ${linkAccent} hover:opacity-80 text-left`}
+                          >
+                            {project.name} ↗
+                          </button>
+                          <button
+                            onClick={() => {
+                              window.open(project.href, '_blank', 'noopener,noreferrer');
+                            }}
+                            className={`p-1 rounded-full border transition-colors duration-300 hover:scale-110 ${chipClass}`}
+                            title="View on GitHub"
+                          >
+                            <SiGithub className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <span className={`text-xs sm:text-sm uppercase tracking-[0.25em] ${subcopyTint}`}>{project.year ?? "2025"}</span>
                       </div>
-                      <p className={`mt-2 text-xs leading-relaxed ${subcopyTint}`}>{project.blurb}</p>
+                      <p className={`mt-2 text-sm sm:text-base leading-relaxed ${subcopyTint}`}>{project.blurb}</p>
                     </div>
                   ))}
               </div>
@@ -323,7 +318,7 @@ export default function PortfolioPage() {
                   <span
                     key={skill.name}
                     className={`flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300 ${chipClass}`}
-                    style={isDarkMode ? undefined : { boxShadow: "0 12px 24px -18px rgba(0,0,0,0.25)" }}
+                    style={{ boxShadow: "0 12px 24px -18px rgba(0,0,0,0.25)" }}
                   >
                     <Icon className="text-sm" style={{ color: skill.color }} />
                     {skill.name}
@@ -360,7 +355,7 @@ export default function PortfolioPage() {
                     className={`flex flex-col gap-2 rounded-2xl border p-5 transition-colors duration-300 sm:flex-row sm:items-center sm:justify-between ${cardClass}`}
                     style={{ backdropFilter: "blur(8px)" }}
                   >
-                    <Link href={post.href} className={`text-sm font-medium transition-colors ${linkAccent}`}>
+                    <Link href={post.href} className={`text-sm sm:text-base font-medium transition-colors ${linkAccent}`}>
                       {post.title} ↗
                     </Link>
                     <span className={`text-xs uppercase tracking-[0.25em] ${subcopyTint}`}>{post.date}</span>

@@ -50,7 +50,7 @@ export default function Providers({ children }) {
   const [font, setFont] = useLocalStorage("novel__font", "Default");
 
   return (
-    <ThemeProvider attribute="class" enableSystem disableTransitionOnChange defaultTheme="system">
+    <ThemeProvider attribute="class" enableSystem disableTransitionOnChange defaultTheme="dark">
       <AppContextBridge font={font} setFont={setFont}>
         {children}
       </AppContextBridge>
