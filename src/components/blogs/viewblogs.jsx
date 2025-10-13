@@ -132,9 +132,6 @@ export function View() {
             <Link href="/blogs/view" className="transition-colors duration-200 hover:text-foreground">
               blogs
             </Link>
-            <Link href="/chat" className="transition-colors duration-200 hover:text-foreground">
-              chat
-            </Link>
             <Link href="/portfolio" className="transition-colors duration-200 hover:text-foreground">
               portfolio
             </Link>
