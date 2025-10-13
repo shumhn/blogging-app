@@ -31,13 +31,13 @@ const TIMELINE_ITEMS = [
 export default function Home() {
   const { font } = useContext(AppContext);
   return (
-    <main className={`min-h-screen bg-[#fef6eb] text-[#1a202c] font-monoUi ${font}`}>
+    <main className={`min-h-screen bg-[#fef6eb] text-[#1a202c] font-blog ${font}`}>
       <div className="mx-auto w-full max-w-4xl px-5 sm:px-8 py-12 sm:py-16 space-y-10">
         <header className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-2">
             <div className="h-6 w-16 rounded-full bg-[#2c5282]" />
-            <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#1a365d] font-title">
-              Hi, I'm Srini
+            <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#1a365d] font-blog">
+              Hi, I'm Devsh - Shumhn
             </h1>
             <p className="text-sm uppercase tracking-[0.3em] text-[#2c2c2c]">Systems engineer · builder · writer</p>
           </div>
