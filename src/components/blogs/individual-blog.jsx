@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Eye, MessageSquare, Clock, Heart, Bookmark, MoreHorizontal, Search, Bell } from "lucide-react";
 import { AppContext } from "@/app/providers";
+import { Spinner } from '@/components/ui/shadcn-io/spinner';
 
 const NAV_LINKS = [
   { href: "/", label: "home" },
@@ -255,7 +256,11 @@ useEffect(() => {
 
   // Early return blocks must come AFTER all hooks to preserve hook order
   if (loading){
-    return <div>loading.....</div>
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Spinner variant="bars" />
+      </div>
+    );
   }
   if (error){
     return <div>Error: {error}</div>
