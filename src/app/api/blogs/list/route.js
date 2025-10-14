@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/db/mongodb";
 import Blog from "@/models/Blog";
+import User from "@/models/User";
 import { unstable_cache } from 'next/cache';
 
 /**
