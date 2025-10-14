@@ -268,22 +268,21 @@ export default function PortfolioPage() {
                   .map((project) => (
                     <div
                       key={project.name}
-                      className={`rounded-2xl border p-5 transition-colors duration-300 ${cardClass}`}
+                      onClick={() => {
+                        const url = project.deployed || project.href;
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                      }}
+                      className={`rounded-2xl border p-5 transition-colors duration-300 cursor-pointer hover:shadow-lg ${cardClass}`}
                       style={{ backdropFilter: "blur(8px)" }}
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex items-center gap-3">
-                          <button
-                            onClick={() => {
-                              const url = project.deployed || project.href;
-                              window.open(url, '_blank', 'noopener,noreferrer');
-                            }}
-                            className={`text-base sm:text-lg font-semibold transition-colors ${linkAccent} hover:opacity-80 text-left`}
-                          >
+                          <h3 className={`text-base sm:text-lg font-semibold transition-colors ${linkAccent} text-left`}>
                             {project.name} ↗
-                          </button>
+                          </h3>
                           <button
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               window.open(project.href, '_blank', 'noopener,noreferrer');
                             }}
                             className={`p-1 rounded-full border transition-colors duration-300 hover:scale-110 ${chipClass}`}
