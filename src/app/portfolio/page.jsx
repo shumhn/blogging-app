@@ -186,7 +186,7 @@ export default function PortfolioPage() {
 
             <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em]">
               <Link
-                href="https://x.com/shumanh_"
+                href="https://github.com/shumhn"
                 target="_blank"
                 rel="noreferrer"
                 className={`underline underline-offset-4 transition-colors ${linkAccent} ${underlineAccent}`}

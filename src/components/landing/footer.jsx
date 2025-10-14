@@ -41,7 +41,7 @@ function Footer() {
             <Github className="h-5 w-5 sm:h-5 sm:w-5" />
           </a>
           <a
-            href="https://x.com/asynchron_"
+            href="https://x.com/devsh_"
             className="hover:text-primary transition-all duration-400 hover:-translate-y-0.5 p-2 sm:p-1 hover:bg-gray-50 rounded-full"
             target="_blank"
             rel="noopener noreferrer"
