@@ -80,5 +80,11 @@ const blogSchema = new mongoose.Schema(
 
 
 
+// Add performance indexes for common query patterns
+blogSchema.index({ publishedAt: -1, views: -1 }); // For sorting by date and popularity
+blogSchema.index({ author: 1, publishedAt: -1 }); // For author-specific queries
+blogSchema.index({ tags: 1, publishedAt: -1 }); // For tag filtering
+blogSchema.index({ createdAt: -1 }); // For general sorting by creation date
+
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
 export default Blog;

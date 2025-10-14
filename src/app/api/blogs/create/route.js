@@ -6,6 +6,7 @@ import {getUserFromCookies} from "@/lib/auth/cookies"
 import User from "@/models/User";
 import slugify from "slugify";
 import mongoose from "mongoose";
+import { revalidateTag } from 'next/cache';
 
 
 export async function POST(req) {
@@ -62,7 +63,11 @@ export async function POST(req) {
     const savedBlog = await Blog.create(blogData);
     await savedBlog.populate("author", "username");
 
-   
+    // Invalidate cache after creating new blog
+    revalidateTag('blogs');
+    revalidateTag('blogs-list');
+    revalidateTag('blogs-all');
+
     return NextResponse.json(
       {
         error:false , 

@@ -5,6 +5,7 @@ import { getUserFromCookies } from "@/lib/auth/cookies";
 import Blog from "@/models/Blog";
 import User from "@/models/User";
 import mongoose from "mongoose";
+import { revalidateTag } from 'next/cache';
 
 
 
@@ -76,6 +77,12 @@ export async function PUT(req) {
                 runValidators: true 
             }
         ).populate('author', 'username');
+
+        // Invalidate cache after updating blog
+        revalidateTag('blogs');
+        revalidateTag('blogs-list');
+        revalidateTag('blogs-all');
+        revalidateTag('blog-detail');
 
         return NextResponse.json({
 

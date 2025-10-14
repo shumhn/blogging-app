@@ -4,28 +4,57 @@ import Blog from "@/models/Blog";
 import View from "@/models/View";
 import {getUserFromCookies} from '@/lib/auth/cookies'
 import User from "@/models/User";
+import { unstable_cache } from 'next/cache';
 
+/**
+ * Optimized blog view endpoint
+ * - Uses caching for individual blog posts
+ * - Implements field selection for better performance
+ * - Handles both single blog and full blog list requests
+ */
 
+// Cache for individual blog posts (longer cache time for individual posts)
+const getCachedBlog = unstable_cache(
+  async (id) => {
+    await dbConnect();
+    return await Blog.findById(id)
+      .select('title slug shortDescription content tags author publishedAt views likesCount createdAt')
+      .populate('author', 'username');
+  },
+  ['blog-detail'],
+  { 
+    revalidate: 600, // Cache for 10 minutes
+    tags: ['blogs', 'blog-detail']
+  }
+);
+
+// Cache for full blog list (shorter cache time for list updates)
+const getCachedAllBlogs = unstable_cache(
+  async () => {
+    await dbConnect();
+    return await Blog.find()
+      .select('title slug shortDescription content tags author publishedAt views likesCount createdAt')
+      .populate('author', 'username')
+      .sort({ publishedAt: -1 }); // Sort by most recent first
+  },
+  ['blogs-all'],
+  { 
+    revalidate: 300, // Cache for 5 minutes
+    tags: ['blogs', 'blogs-all']
+  }
+);
 
 export async function GET(request) {
     try {
-        // const user = await getUserFromCookies ();
-        // if (user.error) {
-        //     return NextResponse.json(
-        //         { error: true, message: "User is unauthorized" },
-        //         { status: 401 }
-        //     );
-        // }
-
-
         await dbConnect();
         
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
         
         if (id) {
-    
-            const blog = await Blog.findById(id).populate('author' , 'username');
+            // Get individual blog with caching
+            const blog = await getCachedBlog(id);
+            
             if (!blog) {
                 return NextResponse.json(
                     { error: true, message: "Blog not found" },
@@ -35,15 +64,17 @@ export async function GET(request) {
 
             return NextResponse.json({
                 error: false,
-               data : blog
-            } , {status : 200});
+                data: blog
+            }, { status: 200 });
         } else {
- 
-            const allBlogs = await Blog.find().populate('author' , 'username');
+            // Get all blogs with caching and optimized query
+            const allBlogs = await getCachedAllBlogs();
+            
             return NextResponse.json({
                 error: false,
-                data : allBlogs
-            } , {status : 200});
+                data: allBlogs,
+                count: allBlogs.length
+            }, { status: 200 });
         }
     } catch (error) {
         console.error('Blog fetch error:', error);

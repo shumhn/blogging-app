@@ -81,24 +81,45 @@ export default function PortfolioPage() {
   const spinnerClass = "border-black/30 dark:border-white/30";
 
   useEffect(() => {
+    /**
+     * Optimized blog fetching for portfolio page
+     * - Uses dedicated list endpoint for better performance
+     * - Only fetches essential fields needed for display
+     * - Implements error handling and loading states
+     */
     async function fetchBlogs() {
       try {
-        const response = await fetch("/api/blogs/view", { method: "GET" });
+        // Use optimized list endpoint instead of full view endpoint
+        const response = await fetch("/api/blogs/list", { 
+          method: "GET",
+          // Add cache headers for better performance
+          headers: {
+            'Cache-Control': 'max-age=300', // Cache for 5 minutes
+          }
+        });
+        
         const data = await response.json();
+        
         if (!data.error && data.data) {
+          // Format blogs for portfolio display with optimized data
           const formattedBlogs = data.data.map((blog) => ({
             title: blog.title,
-            date: new Date(blog.createdAt).toLocaleDateString("en-US", { 
+            date: new Date(blog.publishedAt || blog.createdAt).toLocaleDateString("en-US", { 
               year: "numeric", 
               month: "2-digit", 
               day: "2-digit" 
             }),
-            href: `/blogs/${blog.slug}`,
+            href: blog.href, // Already formatted in the API
+            author: blog.author, // Include author for potential display
           }));
           setBlogPosts(formattedBlogs);
+        } else {
+          console.warn("No blog data received or error in response:", data.message);
         }
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
+        // Set empty array on error to prevent UI issues
+        setBlogPosts([]);
       } finally {
         setBlogsLoading(false);
       }

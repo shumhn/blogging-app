@@ -2,6 +2,7 @@ import { dbConnect } from "@/lib/db/mongodb";
 import { NextResponse } from "next/server";
 import {getUserFromCookies} from '@/lib/auth/cookies'
 import Blog from "@/models/Blog";
+import { revalidateTag } from 'next/cache';
 
 
 export async function DELETE(req){
@@ -41,6 +42,13 @@ if(!blogId) {
         return NextResponse.json({error:true,
             message:"Blog not found"}, {status:404});
     }
+    
+    // Invalidate cache after deleting blog
+    revalidateTag('blogs');
+    revalidateTag('blogs-list');
+    revalidateTag('blogs-all');
+    revalidateTag('blog-detail');
+    
     return NextResponse.json({message:"Blog deleted successfully"}, {status:200});
 }
 

@@ -77,13 +77,31 @@ export function View() {
       }
     }
 
+    /**
+     * Optimized blog fetching for blog list page
+     * - Uses cached endpoint for better performance
+     * - Implements proper error handling
+     * - Adds loading states for better UX
+     */
     async function fetchBlogs() {
       try {
-        const getBlogs = await fetch("/api/blogs/view", { method: "GET" });
+        // Use optimized view endpoint with caching
+        const getBlogs = await fetch("/api/blogs/view", { 
+          method: "GET",
+          headers: {
+            'Cache-Control': 'max-age=300', // Cache for 5 minutes
+          }
+        });
+        
         const data = await getBlogs.json();
-        if (data?.error) setErrors(data.message);
-        else setBlogs(data?.data);
+        
+        if (data?.error) {
+          setErrors(data.message);
+        } else {
+          setBlogs(data?.data || []);
+        }
       } catch (error) {
+        console.error("Blog fetch error:", error);
         setErrors("An unexpected error occurred. Please try again later.");
       } finally {
         setLoading(false);
