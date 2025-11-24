@@ -28,10 +28,18 @@ const experience = [
 
 const projects = [
   {
-    name: "Agentic Chat Bot (Aichat)",
-    category: "ai",
-    blurb: "Node.js CLI chatbot powered by Google's Gemini API with robust error handling and typed UX.",
-    href: "https://github.com/Shumanh/Aichat",
+    name: "SYNK",
+    category: "web",
+    blurb: "Enterprise-Grade Team Collaboration Platform. Real-time collaboration, AI-powered insights, zero chaos.",
+    href: "https://github.com/shumhn/SYNK",
+    year: "2025",
+    deployed: null
+  },
+  {
+    name: "co_foundr",
+    category: "solana",
+    blurb: "Find your co-founder. Build together. Own your profile. Connect with builders and creators.",
+    href: "https://github.com/shumhn/co_foundr",
     year: "2025",
     deployed: null
   },
@@ -42,6 +50,14 @@ const projects = [
     href: "https://github.com/Shumanh/ChainCred",
     year: "2025",
     deployed: "https://chain-cred-five.vercel.app/"
+  },
+  {
+    name: "shumhn",
+    category: "web",
+    blurb: "From blogging platform to my portfolio website. A showcase of my work and thoughts.",
+    href: "https://github.com/shumhn/shumhn",
+    year: "2025",
+    deployed: null
   }
 ];
 
