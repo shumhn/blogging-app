@@ -77,9 +77,8 @@ export async function GET(request) {
             }, { status: 200 });
         }
     } catch (error) {
-        console.error('Blog fetch error:', error);
-
         if (!id) {
+            console.warn('Blog list unavailable:', error);
             return NextResponse.json(
                 {
                     error: false,
@@ -91,6 +90,7 @@ export async function GET(request) {
             );
         }
 
+        console.error('Blog fetch error:', error);
         return NextResponse.json(
             { error: true, message: 'An error occurred while fetching blogs.' },
             { status: 500 }
