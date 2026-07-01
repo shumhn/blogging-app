@@ -128,7 +128,7 @@ export default function Create() {
           <div className="flex justify-between items-center h-12">
             <div className="flex items-center space-x-6">
               <Link href="/" className="text-lg font-semibold text-gray-900 hover:text-gray-700 transition-colors">
-                OwnTheWeb
+                Writza
               </Link>
               <span className="text-sm text-green-600">{saveStatus}</span>
             </div>

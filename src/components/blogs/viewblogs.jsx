@@ -145,13 +145,10 @@ export function View() {
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 py-4 sm:py-6">
           <div className="flex items-center gap-6 text-[18px] lowercase tracking-wide font-blog text-[oklch(0.551_0.027_264.364)]">
             <Link href="/" className="font-semibold text-current transition-colors duration-200 hover:text-foreground">
-              devsg
+              writza
             </Link>
             <Link href="/blogs/view" className="transition-colors duration-200 hover:text-foreground">
               blogs
-            </Link>
-            <Link href="/portfolio" className="transition-colors duration-200 hover:text-foreground">
-              portfolio
             </Link>
             {loggedIn && (
               <Link href="/blogs/create" className="transition-colors duration-200 hover:text-foreground">
@@ -195,7 +192,7 @@ export function View() {
       <main className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-8">
         <header className="space-y-4">
           <p className="text-sm uppercase tracking-[0.25em] text-gray-500">recent writing</p>
-          <h1 className="text-2xl sm:text-[1.65rem] font-semibold tracking-tight text-gray-900 font-blog uppercase">Thoughts on engineering, systems, and product</h1>
+          <h1 className="text-2xl sm:text-[1.65rem] font-semibold tracking-tight text-gray-900 font-blog uppercase">Read and publish blog posts</h1>
         </header>
 
         {blogs.length === 0 ? (

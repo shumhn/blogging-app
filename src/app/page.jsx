@@ -1,2 +1,5 @@
-export { default } from "./portfolio/page";
+import { View } from "@/components/blogs/viewblogs";
 
+export default function HomePage() {
+  return <View />;
+}

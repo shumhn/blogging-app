@@ -12,7 +12,6 @@ import { Spinner } from '@/components/ui/shadcn-io/spinner';
 const NAV_LINKS = [
   { href: "/", label: "home" },
   { href: "/blogs/view", label: "blog" },
-  { href: "/portfolio", label: "portfolio" },
 ];
 
 export function IndividualBlog({ id }) {

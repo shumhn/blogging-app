@@ -142,7 +142,7 @@ export function UpdateBlogForm({ id }) {
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex justify-between items-center h-12">
             <div className="flex items-center space-x-6">
-              <h1 className="text-lg font-semibold text-gray-900">OwnTheWeb</h1>
+              <h1 className="text-lg font-semibold text-gray-900">Writza</h1>
               <span className="text-sm text-green-600">{saveStatus}</span>
             </div>
             <div className="flex items-center space-x-3">
