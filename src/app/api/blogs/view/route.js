@@ -45,12 +45,12 @@ const getCachedAllBlogs = unstable_cache(
 );
 
 export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
     try {
         await dbConnect();
-        
-        const { searchParams } = new URL(request.url);
-        const id = searchParams.get('id');
-        
+
         if (id) {
             // Get individual blog with caching
             const blog = await getCachedBlog(id);
@@ -78,6 +78,19 @@ export async function GET(request) {
         }
     } catch (error) {
         console.error('Blog fetch error:', error);
+
+        if (!id) {
+            return NextResponse.json(
+                {
+                    error: false,
+                    data: [],
+                    count: 0,
+                    warning: 'Blogs are temporarily unavailable.',
+                },
+                { status: 200 }
+            );
+        }
+
         return NextResponse.json(
             { error: true, message: 'An error occurred while fetching blogs.' },
             { status: 500 }
