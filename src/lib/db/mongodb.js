@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error("MongoDB connection string is not defined in MONGODB_URI");
-}
-
 let cached = global.mongoose;
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
@@ -15,6 +9,11 @@ export async function dbConnect() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      throw new Error("MongoDB connection string is not defined in MONGODB_URI");
+    }
+
     // Optimize connection with performance settings
     const options = {
       maxPoolSize: 10, // Maintain up to 10 socket connections
@@ -23,7 +22,7 @@ export async function dbConnect() {
       // Removed bufferMaxEntries and bufferCommands as they're not supported in current MongoDB driver
     };
     
-    cached.promise = mongoose.connect(MONGODB_URI, options).then((mongooseInstance) => {
+    cached.promise = mongoose.connect(mongoUri, options).then((mongooseInstance) => {
       return mongooseInstance;
     });
   }
@@ -31,8 +30,3 @@ export async function dbConnect() {
   cached.conn = await cached.promise;
   return cached.conn;
 }
-
-
-
-
-

@@ -1,6 +1,6 @@
 
 "use client";
-import {useState , useEffect, useRef, useContext} from "react";
+import {useState , useEffect, useRef, useContext, useCallback} from "react";
 import { createRoot } from "react-dom/client";
 import { Tweet } from "react-tweet";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export function IndividualBlog({ id }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userInitial, setUserInitial] = useState("D");
 
-async function getBlog(){
+const getBlog = useCallback(async function getBlog(){
 
   try{ 
      const response = await fetch(`/api/blogs/view?id=${id}` ,{method : "GET"})
@@ -51,13 +51,13 @@ catch(error){
   setLoading(false)
 }
 
-}
+}, [id])
 
 useEffect(() => {
     if (id) {
       getBlog()
     }
-  }, [id])
+  }, [id, getBlog])
 
  // Increment view count once per session for this blog
  useEffect(() => {
@@ -115,7 +115,7 @@ useEffect(() => {
   // Load/refresh Twitter embeds after content mounts or changes
   const contentRef = useRef(null);
   useEffect(() => {
-    if (!blog) return;
+    if (!blog?.content) return;
     const container = contentRef.current;
     if (!container) return;
     let debounceTimer = null;

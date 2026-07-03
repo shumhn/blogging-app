@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import UnifiedRichEditor from "./unified-rich-editor";
 import TagsModal from "@/components/ui/TagsModal";
@@ -128,9 +129,9 @@ export function UpdateBlogForm({ id }) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-10">
         <div className="text-red-600 mb-4">Error: {errors.general}</div>
-        <a href="/blogs/view" className="text-blue-600 hover:underline">
+        <Link href="/blogs/view" className="text-blue-600 hover:underline">
           ← Back to Blogs
-        </a>
+        </Link>
       </div>
     );
   }

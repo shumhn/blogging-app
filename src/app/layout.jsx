@@ -6,6 +6,11 @@ import Providers from "@/app/providers";
 import { playfair, montserrat, cal, inter, ysabeau, jetbrainsMono } from "@/styles/fonts";
 import Script from "next/script";
 
+export const metadata = {
+  title: "Writza",
+  description: "A clean blogging app for reading and publishing posts.",
+};
+
 export default function RootLayout({ children }) {
   return (
       <html
